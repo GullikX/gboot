@@ -77,8 +77,9 @@ XBPS_TARGET_ARCH="$GBOOT_TARGET_ARCH" xbps-install \
     busybox-static \
     $packages
 
-kernelversion=$(find "$GBOOT_ROOT/boot" -name 'vmlinuz-*' -type f | sed 's/^.*-//g')
-mv "$GBOOT_ROOT/boot/vmlinuz-$kernelversion" "$workdir"
+kernelimage=$(file "$GBOOT_ROOT"/boot/* | grep 'Linux kernel' | cut -d ':' -f 1)
+kernelversion=$(basename "$GBOOT_ROOT"/lib/modules/*)
+mv "$kernelimage" "$workdir/linux-$kernelversion"
 
 cat <<EOF > "$GBOOT_ROOT/init"
 #!/usr/bin/busybox.static sh
