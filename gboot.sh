@@ -20,9 +20,11 @@
 #
 #
 
-GBOOT_ROOT="/tmp/gboot-$$"
-GBOOT_TARGET_ARCH='x86_64-musl'
-GBOOT_REPO='https://alpha.de.repo.voidlinux.org/current/musl'
+GBOOT_ROOT="${GBOOT_ROOT:-/tmp/gboot-$$}"
+GBOOT_TARGET_ARCH="${GBOOT_TARGET_ARCH:-x86_64-musl}"
+GBOOT_KERNEL="${GBOOT_KERNEL:-linux-lts}"
+GBOOT_REPO="${GBOOT_REPO:-https://alpha.de.repo.voidlinux.org/current/musl}"
+
 GBOOT_REPO_KEY='
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -65,8 +67,8 @@ XBPS_TARGET_ARCH="$GBOOT_TARGET_ARCH" xbps-install \
     --yes \
     base-files \
     busybox-static \
-    linux-lts \
-    xbps-static
+    xbps-static \
+    "$GBOOT_KERNEL"
 
 XBPS_TARGET_ARCH="$GBOOT_TARGET_ARCH" xbps-install \
     --rootdir "$GBOOT_ROOT" \
